@@ -3,17 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-using Xamarin.Forms;
-
-using ChitankaMobileUI.Models;
-using ChitankaMobileUI.Services;
-
-namespace ChitankaMobileUI.ViewModels
+namespace ChitankaMobileUI.ViewModels.Base
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
-
         bool isBusy = false;
         public bool IsBusy
         {

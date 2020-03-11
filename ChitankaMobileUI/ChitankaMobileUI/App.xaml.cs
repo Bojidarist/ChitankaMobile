@@ -1,8 +1,4 @@
-﻿using System;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-using ChitankaMobileUI.Services;
-using ChitankaMobileUI.Views;
+﻿using Xamarin.Forms;
 
 namespace ChitankaMobileUI
 {
@@ -12,8 +8,6 @@ namespace ChitankaMobileUI
         public App()
         {
             InitializeComponent();
-
-            DependencyService.Register<MockDataStore>();
             MainPage = new AppShell();
         }
 
