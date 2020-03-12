@@ -1,5 +1,5 @@
 ﻿using ChitankaAPI;
-using ChitankaMobileUI.Services;
+using ChitankaMobileUI.Models;
 using ChitankaMobileUI.ViewModels;
 using System.Text.RegularExpressions;
 using Xamarin.Forms;
@@ -17,19 +17,6 @@ namespace ChitankaMobileUI.Views
             InitializeComponent();
             vm = new WebPageViewModel();
             BindingContext = vm;
-            StaticFileDownloader.Downloader.OnFileDownloaded += Downloader_OnFileDownloaded;
-        }
-
-        private void Downloader_OnFileDownloaded(object sender, DownloadEventArgs e)
-        {
-            if (e.FileSaved)
-            {
-                DisplayAlert("File Download", "File saved", "Close");
-            }
-            else
-            {
-                DisplayAlert("File Download", "File not saved", "Close");
-            }
         }
 
         private void CWebView_Navigated(object sender, WebNavigatedEventArgs e)
@@ -40,10 +27,8 @@ namespace ChitankaMobileUI.Views
             {
                 string id = regex.Groups[1].Value;
                 CBook book = CApi.SearchBooks(id, "id", "exact").Books[0];
-                StaticFileDownloader.Downloader.DownloadFile(e.Url, "ChitankaDownloads",
-                    $"{ book.Id }-{ book.Title }.epub");
-                // Add book to Google drive helper
-                BookKeeperService.Books.Add(book);
+                ChitankaBookModel cBook = new ChitankaBookModel() { Book = book, DownloadURL = e.Url };
+                Navigation.PushModalAsync(new NavigationPage(new BookDetailView(cBook)));
             }
             else
             {

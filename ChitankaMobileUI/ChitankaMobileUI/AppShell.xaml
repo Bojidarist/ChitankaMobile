@@ -35,7 +35,7 @@
         <Tab Title="Web">
             <ShellContent ContentTemplate="{DataTemplate views:WebPageView}" />
         </Tab>
-        <Tab Title="Local Books">
+        <Tab Title="Books">
             <ShellContent ContentTemplate="{DataTemplate views:LocalBooksView}" />
         </Tab>
         <Tab Title="Settings">
