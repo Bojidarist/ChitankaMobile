@@ -38,6 +38,9 @@
         <Tab Title="Local Books">
             <ShellContent ContentTemplate="{DataTemplate views:LocalBooksView}" />
         </Tab>
+        <Tab Title="Settings">
+            <ShellContent ContentTemplate="{DataTemplate views:SettingsView}" />
+        </Tab>
     </TabBar>
 
     <!-- Optional Templates
