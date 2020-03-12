@@ -5,11 +5,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Appearing="ContentPage_Appearing"
     Shell.NavBarIsVisible="False"
     mc:Ignorable="d">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="WPV" />
-        </StackLayout>
+        <Grid>
+            <WebView
+                x:Name="CWebView"
+                Navigated="CWebView_Navigated"
+                Source="{Binding MainPage}"
+                VerticalOptions="FillAndExpand" />
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

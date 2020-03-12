@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using ChitankaMobileUI.Services;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace ChitankaMobileUI.Views
@@ -9,6 +10,12 @@ namespace ChitankaMobileUI.Views
         public LocalBooksView()
         {
             InitializeComponent();
+            BooksList.ItemsSource = BookKeeperService.Books;
+        }
+
+        private void ContentPage_Appearing(object sender, System.EventArgs e)
+        {
+
         }
     }
 }
