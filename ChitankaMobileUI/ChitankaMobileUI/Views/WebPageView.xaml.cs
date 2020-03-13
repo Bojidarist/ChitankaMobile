@@ -22,7 +22,7 @@ namespace ChitankaMobileUI.Views
         private void CWebView_Navigated(object sender, WebNavigatedEventArgs e)
         {
             // This regex checks if the url is a book and gets the id
-            Match regex = new Regex(@"-(\d+)-b.epub").Match(e.Url);
+            Match regex = new Regex(@"(\d+)[-b]*.epub").Match(e.Url);
             if (regex.Success)
             {
                 string id = regex.Groups[1].Value;

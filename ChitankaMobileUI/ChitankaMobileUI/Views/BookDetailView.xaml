@@ -21,7 +21,7 @@
 
             <Grid Margin="8">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.9*" />
+                    <ColumnDefinition Width="{OnIdiom auto, Phone=0.9*, Tablet=2*}" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <BoxView
