@@ -12,6 +12,7 @@ namespace ChitankaMobileUI.Droid.DependencyServices
     public class AndroidFileDownloader : IFileDownloader
     {
         public event EventHandler<DownloadEventArgs> OnFileDownloaded;
+        private string filePath;
 
         public void DownloadFile(string url, string folder, string fileName)
         {
@@ -23,20 +24,20 @@ namespace ChitankaMobileUI.Droid.DependencyServices
                 using (WebClient client = new WebClient())
                 {
                     client.DownloadFileCompleted += FileDownloadCompleted;
-                    string filePath = Path.Combine(newFolderPath, fileName);
+                    filePath = Path.Combine(newFolderPath, fileName);
                     client.DownloadFileAsync(new Uri(url), filePath);
                 }
             }
             catch (Exception)
             {
-                OnFileDownloaded?.Invoke(this, new DownloadEventArgs(false));
+                OnFileDownloaded?.Invoke(this, new DownloadEventArgs(false, null));
             }
         }
 
         private void FileDownloadCompleted(object sender, AsyncCompletedEventArgs e)
         {
             bool isDownloaded = e.Error == null;
-            OnFileDownloaded?.Invoke(this, new DownloadEventArgs(isDownloaded));
+            OnFileDownloaded?.Invoke(this, new DownloadEventArgs(isDownloaded, filePath));
         }
     }
 }

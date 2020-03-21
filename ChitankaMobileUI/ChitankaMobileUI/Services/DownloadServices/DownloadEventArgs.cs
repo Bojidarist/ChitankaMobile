@@ -5,9 +5,12 @@ namespace ChitankaMobileUI.Services
     public class DownloadEventArgs : EventArgs
     {
         public bool FileSaved = false;
-        public DownloadEventArgs(bool fileSaved)
+        public string Path;
+
+        public DownloadEventArgs(bool fileSaved, string path)
         {
             FileSaved = fileSaved;
+            Path = path;
         }
     }
 }

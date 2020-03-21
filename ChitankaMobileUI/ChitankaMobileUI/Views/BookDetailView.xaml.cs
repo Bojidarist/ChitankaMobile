@@ -1,5 +1,7 @@
 ﻿using ChitankaMobileUI.Models;
 using ChitankaMobileUI.Services;
+using System.Collections.Generic;
+using System.IO;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -29,6 +31,12 @@ namespace ChitankaMobileUI.Views
             if (e.FileSaved)
             {
                 DisplayAlert("File Download", "File saved", "Close");
+                if (!StaticFileDownloader.DownloadPaths.Contains(e.Path))
+                {
+                    StaticDriveAPI.Instance.UploadFile(e.Path, Path.GetFileName(e.Path),
+                        new List<string> { "FolderId" }, "Electronic Publication/epub");
+                    StaticFileDownloader.DownloadPaths.Add(e.Path);
+                }
             }
             else
             {
@@ -40,7 +48,6 @@ namespace ChitankaMobileUI.Views
         {
             StaticFileDownloader.Downloader.DownloadFile(book.DownloadURL, "ChitankaDownloads",
                 $"{ book.Book.Id }-{ book.Book.Title }.epub");
-            // Add book to Google drive helper
             BookKeeperService.Books.Add(book.Book);
         }
     }
