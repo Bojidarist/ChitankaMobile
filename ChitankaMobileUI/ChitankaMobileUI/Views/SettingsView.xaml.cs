@@ -1,10 +1,12 @@
 ﻿using ChitankaDriveAPI;
+using ChitankaMobileUI.Configuration;
 using ChitankaMobileUI.Helpers;
 using ChitankaMobileUI.Services;
 using System;
 using System.IO;
 using System.Net;
 using System.Text;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,6 +18,11 @@ namespace ChitankaMobileUI.Views
         public SettingsView()
         {
             InitializeComponent();
+
+            if (GlobalConfig.Instance.Properties.ContainsKey("dSaveFolderId"))
+            {
+                FolderIdText.Text = GlobalConfig.Instance.Properties["dSaveFolderId"] as string;
+            }
         }
 
         private async void ConnectBtn_Clicked(object sender, System.EventArgs e)
@@ -25,13 +32,25 @@ namespace ChitankaMobileUI.Views
                 HttpListener listener = new HttpListener();
                 listener.Prefixes.Add("http://127.0.0.2:4321/");
                 listener.Start();
-                StaticDriveAPI.Instance.GetAuthURL(GoogleDriveScopes.DriveFile, true);
+                string authUrl = StaticDriveAPI.Instance.GetAuthURL(GoogleDriveScopes.DriveFile, false);
+                await Browser.OpenAsync(authUrl);
                 bool isLoggedIn = false;
                 while (!isLoggedIn)
                 {
                     HttpListenerContext context = listener.GetContext();
                     if (context != null)
                     {
+                        // Get user code
+                        string rawUrl = context.Request.RawUrl;
+                        int codeIndex = rawUrl.IndexOf('=') + 1;
+                        string clientCode = rawUrl.Substring(codeIndex);
+                        var token = await StaticDriveAPI.Instance.GetAuthToken(clientCode);
+                        token.WriteToLocalJsonFile();
+
+                        // Initialize Drive service
+                        StaticDriveAPI.Instance.InitDriveService();
+
+                        isLoggedIn = true;
                         string msg = "<h1>All done here</h1>";
                         context.Response.ContentLength64 = Encoding.UTF8.GetByteCount(msg);
                         context.Response.StatusCode = (int)HttpStatusCode.OK;
@@ -41,17 +60,6 @@ namespace ChitankaMobileUI.Views
                             {
                                 // Return a message to the user
                                 writer.Write(msg);
-
-                                // Get user code
-                                string rawUrl = context.Request.RawUrl;
-                                int codeIndex = rawUrl.IndexOf('=') + 1;
-                                string clientCode = rawUrl.Substring(codeIndex);
-                                var token = await StaticDriveAPI.Instance.GetAuthToken(clientCode);
-                                token.WriteToLocalJsonFile();
-
-                                // Initialize Drive service
-                                StaticDriveAPI.Instance.InitDriveService();
-                                isLoggedIn = true;
                             }
                         }
                     }
@@ -62,6 +70,12 @@ namespace ChitankaMobileUI.Views
             {
                 throw;
             }
+        }
+
+        private void SaveButton_Clicked(object sender, EventArgs e)
+        {
+            GlobalConfig.Instance.Properties["dSaveFolderId"] = FolderIdText.Text;
+            GlobalConfig.Instance.Save();
         }
     }
 }

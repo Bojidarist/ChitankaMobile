@@ -1,4 +1,5 @@
-﻿using ChitankaMobileUI.Models;
+﻿using ChitankaMobileUI.Configuration;
+using ChitankaMobileUI.Models;
 using ChitankaMobileUI.Services;
 using System.Collections.Generic;
 using System.IO;
@@ -30,12 +31,17 @@ namespace ChitankaMobileUI.Views
         {
             if (e.FileSaved)
             {
-                DisplayAlert("File Download", "File saved", "Close");
                 if (!StaticFileDownloader.DownloadPaths.Contains(e.Path))
                 {
+                    DisplayAlert("File Download", "File saved", "Close");
                     StaticDriveAPI.Instance.UploadFile(e.Path, Path.GetFileName(e.Path),
-                        new List<string> { "FolderId" }, "Electronic Publication/epub");
+                        new List<string> { GlobalConfig.Instance.Properties["dSaveFolderId"] as string },
+                        "Electronic Publication/epub");
                     StaticFileDownloader.DownloadPaths.Add(e.Path);
+                }
+                else
+                {
+                    DisplayAlert("File Already Download", "File not saved", "Close");
                 }
             }
             else

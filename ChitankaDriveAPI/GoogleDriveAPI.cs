@@ -10,8 +10,6 @@ using System.Net;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using Xamarin.Essentials;
-using Xamarin.Forms;
 
 namespace ChitankaDriveAPI
 {
@@ -41,11 +39,7 @@ namespace ChitankaDriveAPI
                 }
                 catch
                 {
-                    if (Device.RuntimePlatform == Device.Android || Device.RuntimePlatform == Device.iOS)
-                    {
-                        Browser.OpenAsync(url);
-                    }
-                    else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                     {
                         url = url.Replace("&", "^&");
                         Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
