@@ -46,7 +46,6 @@ namespace ChitankaMobileUI.Views
         {
             StaticFileDownloader.Downloader.DownloadFile(book.DownloadURL, "ChitankaDownloads",
                 $"{ book.Book.Id }-{ book.Book.Title }.epub");
-            BookKeeperService.Books.Add(book.Book);
         }
     }
 }
