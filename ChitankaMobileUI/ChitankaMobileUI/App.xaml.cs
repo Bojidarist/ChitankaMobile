@@ -1,6 +1,7 @@
 ﻿using ChitankaDriveAPI;
 using ChitankaMobileUI.Helpers;
 using ChitankaMobileUI.Services;
+using ChitankaMobileUI.Views;
 using Newtonsoft.Json;
 using System;
 using System.IO;
@@ -28,6 +29,11 @@ namespace ChitankaMobileUI
                 var newToken = await StaticDriveAPI.Instance.RefreshAuthToken(currentToken.RefreshToken);
                 newToken.WriteToLocalJsonFile();
                 StaticDriveAPI.Instance.InitDriveService();
+            }
+
+            if (!StaticDriveAPI.Instance.IsLoggedIn)
+            {
+                await MainPage.Navigation.PushAsync(new LoginPromptView());
             }
         }
 

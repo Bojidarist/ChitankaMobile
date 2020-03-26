@@ -21,6 +21,15 @@ namespace ChitankaDriveAPI
 
         public GoogleDriveApp DriveApp { get; set; }
         public AccessTokenResponse TokenResponse { get; set; }
+        public bool IsLoggedIn
+        {
+            get
+            {
+                return TokenResponse.AccessToken != null
+                    && TokenResponse.RefreshToken != null
+                    && TokenResponse.TokenType != null;
+            }
+        }
 
         public GoogleDriveAPI(GoogleDriveApp app, AccessTokenResponse tokenResponse = null)
         {
