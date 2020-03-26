@@ -18,11 +18,6 @@ namespace ChitankaMobileUI.Views
         public SettingsView()
         {
             InitializeComponent();
-
-            if (GlobalConfig.Instance.Properties.ContainsKey("dSaveFolderId"))
-            {
-                FolderIdText.Text = GlobalConfig.Instance.Properties["dSaveFolderId"] as string;
-            }
         }
 
         private async void ConnectBtn_Clicked(object sender, System.EventArgs e)
@@ -32,7 +27,7 @@ namespace ChitankaMobileUI.Views
                 HttpListener listener = new HttpListener();
                 listener.Prefixes.Add("http://127.0.0.2:4321/");
                 listener.Start();
-                string authUrl = StaticDriveAPI.Instance.GetAuthURL(GoogleDriveScopes.DriveFile, false);
+                string authUrl = StaticDriveAPI.Instance.GetAuthURL(GoogleDriveScopes.Drive, false);
                 await Browser.OpenAsync(authUrl);
                 bool isLoggedIn = false;
                 while (!isLoggedIn)
@@ -72,10 +67,17 @@ namespace ChitankaMobileUI.Views
             }
         }
 
-        private void SaveButton_Clicked(object sender, EventArgs e)
+        private async void ChooseFolderButton_Clicked(object sender, EventArgs e)
         {
-            GlobalConfig.Instance.Properties["dSaveFolderId"] = FolderIdText.Text;
-            GlobalConfig.Instance.Save();
+            await Navigation.PushAsync(new GDriveFolderView());
+        }
+
+        private void ContentPage_Appearing(object sender, EventArgs e)
+        {
+            if (GlobalConfig.Instance.Properties.ContainsKey("dSaveFolderName"))
+            {
+                FolderNameText.Text = GlobalConfig.Instance.Properties["dSaveFolderName"] as string;
+            }
         }
     }
 }

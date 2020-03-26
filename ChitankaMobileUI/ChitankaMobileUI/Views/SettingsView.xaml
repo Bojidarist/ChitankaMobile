@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Appearing="ContentPage_Appearing"
     Shell.NavBarIsVisible="False"
     mc:Ignorable="d">
     <ContentPage.Content>
@@ -13,12 +14,15 @@
             <Button
                 x:Name="ConnectBtn"
                 Clicked="ConnectBtn_Clicked"
-                Text="Connect" />
-            <Entry x:Name="FolderIdText" Placeholder="FolderId" />
+                Text="Connect Google Account" />
+            <Entry
+                x:Name="FolderNameText"
+                IsReadOnly="True"
+                Placeholder="Folder Name" />
             <Button
-                x:Name="SaveButton"
-                Clicked="SaveButton_Clicked"
-                Text="Save" />
+                x:Name="ChooseFolderButton"
+                Clicked="ChooseFolderButton_Clicked"
+                Text="Choose Folder" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

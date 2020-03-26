@@ -157,5 +157,18 @@ namespace ChitankaDriveAPI
                 client.DownloadFile($"http://drive.google.com/uc?export=download&id={ fileId }", filePath);
             }
         }
+
+        public async Task<FileListResponse> GetFiles(string q = "", int pageSize = 100, string orderBy = "", string pageToken = "")
+        {
+            string url = $"https://www.googleapis.com/drive/v3/files/?q={ q }&pageSize={ pageSize }&orderBy={ orderBy }&key={ pageToken }";
+
+            using (WebClient client = new WebClient())
+            {
+                client.Headers[HttpRequestHeader.Authorization] = $"{TokenResponse.TokenType} { TokenResponse.AccessToken }";
+                var json = await client.DownloadStringTaskAsync(url);
+                var response = JsonConvert.DeserializeObject<FileListResponse>(json);
+                return response;
+            }
+        }
     }
 }

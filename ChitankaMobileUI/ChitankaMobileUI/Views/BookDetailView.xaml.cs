@@ -27,26 +27,18 @@ namespace ChitankaMobileUI.Views
             BookImage.Source = "https://assets.chitanka.info/" + book.Book.Cover;
         }
 
-        private void Downloader_OnFileDownloaded(object sender, DownloadEventArgs e)
+        private async void Downloader_OnFileDownloaded(object sender, DownloadEventArgs e)
         {
             if (e.FileSaved)
             {
-                if (!StaticFileDownloader.DownloadPaths.Contains(e.Path))
-                {
-                    DisplayAlert("File Download", "File saved", "Close");
-                    StaticDriveAPI.Instance.UploadFile(e.Path, Path.GetFileName(e.Path),
-                        new List<string> { GlobalConfig.Instance.Properties["dSaveFolderId"] as string },
-                        "Electronic Publication/epub");
-                    StaticFileDownloader.DownloadPaths.Add(e.Path);
-                }
-                else
-                {
-                    DisplayAlert("File Already Download", "File not saved", "Close");
-                }
+                StaticDriveAPI.Instance.UploadFile(e.Path, Path.GetFileName(e.Path),
+                    new List<string> { GlobalConfig.Instance.Properties["dSaveFolderId"] as string },
+                    "Electronic Publication/epub");
+                await DisplayAlert("File Download", "File saved", "Close");
             }
             else
             {
-                DisplayAlert("File Download", "File not saved", "Close");
+                await DisplayAlert("File Download", "File not saved", "Close");
             }
         }
 

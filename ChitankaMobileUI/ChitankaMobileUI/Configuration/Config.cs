@@ -30,7 +30,8 @@ namespace ChitankaMobileUI.Configuration
 
         public void Load()
         {
-            Properties = JsonConvert.DeserializeObject<Dictionary<string, object>>(File.ReadAllText(CfgPath));
+            string json = File.ReadAllText(CfgPath);
+            Properties = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
             if (Properties == null)
             {
                 Properties = new Dictionary<string, object>();
