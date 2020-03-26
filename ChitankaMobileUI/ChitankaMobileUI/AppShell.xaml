@@ -32,10 +32,10 @@
 
     <!--  Your Pages  -->
     <TabBar>
-        <Tab Title="Web">
+        <Tab Title="Web" Icon="explore_icon.png">
             <ShellContent ContentTemplate="{DataTemplate views:WebPageView}" />
         </Tab>
-        <Tab Title="Settings">
+        <Tab Title="Settings" Icon="settings_icon.png">
             <ShellContent ContentTemplate="{DataTemplate views:SettingsView}" />
         </Tab>
     </TabBar>
