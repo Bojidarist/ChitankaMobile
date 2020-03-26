@@ -18,23 +18,22 @@ namespace ChitankaDriveAPI
         private string AuthPage => $"https://accounts.google.com/o/oauth2/auth?access_type=offline&response_type=code&client_id={ DriveApp.ClientId }&redirect_uri={ DriveApp.RedirectUri }&scope=";
         private static UserCredential credential;
         private static DriveService service;
+        private AccessTokenResponse tokenResponse;
 
         public GoogleDriveApp DriveApp { get; set; }
-        public AccessTokenResponse TokenResponse { get; set; }
-        public bool IsLoggedIn
-        {
-            get
-            {
-                return TokenResponse.AccessToken != null
-                    && TokenResponse.RefreshToken != null
-                    && TokenResponse.TokenType != null;
-            }
-        }
+        public AccessTokenResponse TokenResponse { get => tokenResponse; set => tokenResponse = value; }
 
         public GoogleDriveAPI(GoogleDriveApp app, AccessTokenResponse tokenResponse = null)
         {
             DriveApp = app;
             TokenResponse = tokenResponse;
+        }
+
+        public bool IsLoggedIn()
+        {
+            return tokenResponse != null ? tokenResponse.AccessToken != null
+                && tokenResponse.RefreshToken != null
+                && tokenResponse.TokenType != null : false;
         }
 
         public string GetAuthURL(string scope, bool tryOpenInBrowser)

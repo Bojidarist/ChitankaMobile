@@ -21,17 +21,25 @@ namespace ChitankaMobileUI
         protected override async void OnStart()
         {
             // Refresh token on startup
-            string tokenPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "token.json");
-            if (File.Exists(tokenPath))
+            try
             {
-                string tokenResponseText = File.ReadAllText(tokenPath);
-                var currentToken = JsonConvert.DeserializeObject<AccessTokenResponse>(tokenResponseText);
-                var newToken = await StaticDriveAPI.Instance.RefreshAuthToken(currentToken.RefreshToken);
-                newToken.WriteToLocalJsonFile();
-                StaticDriveAPI.Instance.InitDriveService();
+                string tokenPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "token.json");
+                if (File.Exists(tokenPath))
+                {
+                    string tokenResponseText = File.ReadAllText(tokenPath);
+                    var currentToken = JsonConvert.DeserializeObject<AccessTokenResponse>(tokenResponseText);
+                    var newToken = await StaticDriveAPI.Instance.RefreshAuthToken(currentToken.RefreshToken);
+                    newToken.WriteToLocalJsonFile();
+                    StaticDriveAPI.Instance.InitDriveService();
+                }
+            }
+            // Don't do this
+            catch (Exception)
+            {
+                await MainPage.Navigation.PushAsync(new LoginPromptView());
             }
 
-            if (!StaticDriveAPI.Instance.IsLoggedIn)
+            if (!StaticDriveAPI.Instance.IsLoggedIn())
             {
                 await MainPage.Navigation.PushAsync(new LoginPromptView());
             }

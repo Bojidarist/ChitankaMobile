@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
+using ChitankaMobileUI.Helpers;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,6 +11,11 @@ namespace ChitankaMobileUI.Views
         public LoginPromptView()
         {
             InitializeComponent();
+        }
+
+        private async void GoogleAuthButton_Clicked(object sender, System.EventArgs e)
+        {
+            await AuthHelper.GoogleAuth();
         }
     }
 }

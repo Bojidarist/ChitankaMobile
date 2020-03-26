@@ -1,12 +1,7 @@
-﻿using ChitankaDriveAPI;
-using ChitankaMobileUI.Configuration;
+﻿using ChitankaMobileUI.Configuration;
 using ChitankaMobileUI.Helpers;
 using ChitankaMobileUI.Services;
 using System;
-using System.IO;
-using System.Net;
-using System.Text;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -22,49 +17,7 @@ namespace ChitankaMobileUI.Views
 
         private async void ConnectBtn_Clicked(object sender, System.EventArgs e)
         {
-            try
-            {
-                HttpListener listener = new HttpListener();
-                listener.Prefixes.Add("http://127.0.0.2:4321/");
-                listener.Start();
-                string authUrl = StaticDriveAPI.Instance.GetAuthURL(GoogleDriveScopes.Drive, false);
-                await Browser.OpenAsync(authUrl);
-                bool isLoggedIn = false;
-                while (!isLoggedIn)
-                {
-                    HttpListenerContext context = listener.GetContext();
-                    if (context != null)
-                    {
-                        // Get user code
-                        string rawUrl = context.Request.RawUrl;
-                        int codeIndex = rawUrl.IndexOf('=') + 1;
-                        string clientCode = rawUrl.Substring(codeIndex);
-                        var token = await StaticDriveAPI.Instance.GetAuthToken(clientCode);
-                        token.WriteToLocalJsonFile();
-
-                        // Initialize Drive service
-                        StaticDriveAPI.Instance.InitDriveService();
-
-                        isLoggedIn = true;
-                        string msg = "<h1>All done here</h1>";
-                        context.Response.ContentLength64 = Encoding.UTF8.GetByteCount(msg);
-                        context.Response.StatusCode = (int)HttpStatusCode.OK;
-                        using (Stream stream = context.Response.OutputStream)
-                        {
-                            using (StreamWriter writer = new StreamWriter(stream))
-                            {
-                                // Return a message to the user
-                                writer.Write(msg);
-                            }
-                        }
-                    }
-                }
-                listener.Stop();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            await AuthHelper.GoogleAuth();
         }
 
         private async void ChooseFolderButton_Clicked(object sender, EventArgs e)
@@ -77,6 +30,10 @@ namespace ChitankaMobileUI.Views
             if (GlobalConfig.Instance.Properties.ContainsKey("dSaveFolderName"))
             {
                 FolderNameText.Text = GlobalConfig.Instance.Properties["dSaveFolderName"] as string;
+            }
+            if (StaticDriveAPI.Instance.IsLoggedIn())
+            {
+                ConnectBtn.Text = "Reconnect Google Account";
             }
         }
     }
