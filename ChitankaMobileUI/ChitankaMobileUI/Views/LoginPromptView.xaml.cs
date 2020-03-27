@@ -1,5 +1,4 @@
-﻿
-using ChitankaMobileUI.Helpers;
+﻿using ChitankaMobileUI.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,11 +10,7 @@ namespace ChitankaMobileUI.Views
         public LoginPromptView()
         {
             InitializeComponent();
-        }
-
-        private async void GoogleAuthButton_Clicked(object sender, System.EventArgs e)
-        {
-            await AuthHelper.GoogleAuth();
+            BindingContext = new LoginPromptViewModel();
         }
     }
 }

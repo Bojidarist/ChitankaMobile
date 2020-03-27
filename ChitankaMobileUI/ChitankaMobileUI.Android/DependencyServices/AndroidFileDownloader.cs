@@ -16,16 +16,23 @@ namespace ChitankaMobileUI.Droid.DependencyServices
 
         public void DownloadFile(string url, string folder, string fileName)
         {
-            string newFolderPath = Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, folder);
-            Directory.CreateDirectory(newFolderPath);
-
             try
             {
+                string newFolderPath = Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, folder);
+                Directory.CreateDirectory(newFolderPath);
+
                 using (WebClient client = new WebClient())
                 {
                     client.DownloadFileCompleted += FileDownloadCompleted;
                     filePath = Path.Combine(newFolderPath, fileName);
-                    client.DownloadFileAsync(new Uri(url), filePath);
+                    if (!File.Exists(filePath))
+                    {
+                        client.DownloadFileAsync(new Uri(url), filePath);
+                    }
+                    else
+                    {
+                        OnFileDownloaded?.Invoke(this, new DownloadEventArgs(true, filePath));
+                    }
                 }
             }
             catch (Exception)

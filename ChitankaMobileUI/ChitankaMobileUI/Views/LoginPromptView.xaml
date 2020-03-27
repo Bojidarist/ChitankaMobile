@@ -9,8 +9,7 @@
     <ContentPage.Content>
         <Grid>
             <Button
-                x:Name="GoogleAuthButton"
-                Clicked="GoogleAuthButton_Clicked"
+                Command="{Binding GAuthCommand}"
                 HorizontalOptions="Center"
                 Text="Connect Google Account"
                 VerticalOptions="Center" />

@@ -29,30 +29,30 @@
                     BackgroundColor="Green"
                     CornerRadius="16" />
                 <Image
-                    x:Name="BookImage"
                     Grid.Column="0"
                     Margin="8"
-                    Aspect="AspectFill" />
+                    Aspect="AspectFill"
+                    Source="{Binding BookCover}" />
                 <StackLayout Grid.Column="1">
                     <Label
-                        x:Name="BookTitle"
                         Margin="8"
                         FontAttributes="Bold"
                         FontSize="Default"
                         HorizontalTextAlignment="Center"
                         LineBreakMode="TailTruncation"
+                        Text="{Binding Book.Book.Title}"
                         TextColor="White" />
                     <StackLayout>
                         <Label FontSize="Small" Text="Автор:" />
-                        <Label x:Name="BookAuthor" TextColor="White" />
+                        <Label Text="{Binding Book.Book.TitleAuthor}" TextColor="White" />
                     </StackLayout>
                     <StackLayout>
                         <Label FontSize="Small" Text="Година:" />
-                        <Label x:Name="BookYear" TextColor="White" />
+                        <Label Text="{Binding BookYear}" TextColor="White" />
                     </StackLayout>
                     <StackLayout>
                         <Label FontSize="Small" Text="Език:" />
-                        <Label x:Name="BookLanguage" TextColor="White" />
+                        <Label Text="{Binding Book.Book.Language.Name}" TextColor="White" />
                     </StackLayout>
                 </StackLayout>
             </Grid>
@@ -60,20 +60,20 @@
                 <StackLayout Margin="8">
                     <Label FontSize="Large" Text="Описание" />
                     <Label
-                        x:Name="BookDescription"
                         Margin="16,16"
-                        FontSize="Body" />
+                        FontSize="Body"
+                        Text="{Binding Book.Book.Annotation}" />
                 </StackLayout>
             </ScrollView>
             <Button
-                x:Name="DownloadButton"
                 Grid.Row="2"
                 Margin="8"
                 BackgroundColor="DarkSeaGreen"
                 BorderColor="Brown"
                 BorderWidth="0.25"
-                Clicked="DownloadButton_Clicked"
+                Command="{Binding DownloadBookCommand}"
                 CornerRadius="4"
+                IsEnabled="{Binding IsDownloadable}"
                 Opacity="0.85"
                 Text="Изтегли"
                 TextColor="White"

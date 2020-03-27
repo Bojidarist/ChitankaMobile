@@ -5,24 +5,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Appearing="ContentPage_Appearing"
     Shell.NavBarIsVisible="False"
     mc:Ignorable="d">
     <ContentPage.Content>
         <StackLayout>
             <Label Text="Settings" />
-            <Button
-                x:Name="ConnectBtn"
-                Clicked="ConnectBtn_Clicked"
-                Text="Connect Google Account" />
+            <Button Command="{Binding GConnectCommand}" Text="{Binding ConnectToGoogleText}" />
             <Entry
-                x:Name="FolderNameText"
                 IsReadOnly="True"
-                Placeholder="Folder Name" />
-            <Button
-                x:Name="ChooseFolderButton"
-                Clicked="ChooseFolderButton_Clicked"
-                Text="Choose Folder" />
+                Placeholder="Folder Name"
+                Text="{Binding GDriveFolderName}" />
+            <Button Command="{Binding GFolderSelectCommand}" Text="Choose Folder" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

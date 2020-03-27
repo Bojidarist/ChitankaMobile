@@ -7,15 +7,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <ContentPage.ToolbarItems>
-        <ToolbarItem
-            x:Name="RefreshButton"
-            Clicked="RefreshButton_Clicked"
-            Text="Refresh" />
+        <ToolbarItem Command="{Binding RefreshCommand}" Text="Refresh" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <Grid>
             <ScrollView>
-                <ListView x:Name="FilesList" ItemSelected="FilesList_ItemSelected">
+                <ListView ItemSelected="FilesList_ItemSelected" ItemsSource="{Binding Files}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>

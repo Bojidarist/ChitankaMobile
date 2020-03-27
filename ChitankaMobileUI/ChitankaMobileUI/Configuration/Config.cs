@@ -7,6 +7,8 @@ namespace ChitankaMobileUI.Configuration
 {
     public class Config
     {
+        public event Action OnConfigSaved;
+
         public Dictionary<string, object> Properties { get; set; }
         public string CfgPath { get; set; }
 
@@ -42,6 +44,7 @@ namespace ChitankaMobileUI.Configuration
         {
             var cfg = JsonConvert.SerializeObject(Properties);
             File.WriteAllText(CfgPath, cfg);
+            OnConfigSaved?.Invoke();
         }
     }
 }
