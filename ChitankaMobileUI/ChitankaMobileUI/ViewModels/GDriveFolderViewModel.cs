@@ -37,15 +37,15 @@ namespace ChitankaMobileUI.ViewModels
 
         public void Init()
         {
-            if (!GlobalConfig.Instance.Properties.ContainsKey("dFoldersList")
-                || string.IsNullOrWhiteSpace(GlobalConfig.Instance.Properties["dFoldersList"].ToString())
-                || GlobalConfig.Instance.Properties["dFoldersList"].GetType() != typeof(FileListResponse))
+            if (!GlobalConfig.Instance.Properties.ContainsKey(GlobalConfig.Options.DFoldersList)
+                || string.IsNullOrWhiteSpace(GlobalConfig.Instance.Properties[GlobalConfig.Options.DFoldersList].ToString())
+                || GlobalConfig.Instance.Properties[GlobalConfig.Options.DFoldersList].GetType() != typeof(FileListResponse))
             {
                 RefreshCommand.Execute(null);
             }
             else
             {
-                var driveFiles = GlobalConfig.Instance.Properties["dFoldersList"] as FileListResponse;
+                var driveFiles = GlobalConfig.Instance.Properties[GlobalConfig.Options.DFoldersList] as FileListResponse;
                 Files = new ObservableCollection<DriveFile>(driveFiles.Files);
             }
         }
@@ -54,10 +54,10 @@ namespace ChitankaMobileUI.ViewModels
         {
             RefreshCommand = new Command(async () =>
             {
-                GlobalConfig.Instance.Properties["dFoldersList"] =
+                GlobalConfig.Instance.Properties[GlobalConfig.Options.DFoldersList] =
                     await StaticDriveAPI.Instance.GetFiles("mimeType = 'application/vnd.google-apps.folder'", 100, "viewedByMeTime desc");
                 GlobalConfig.Instance.Save();
-                var driveFiles = GlobalConfig.Instance.Properties["dFoldersList"] as FileListResponse;
+                var driveFiles = GlobalConfig.Instance.Properties[GlobalConfig.Options.DFoldersList] as FileListResponse;
                 Files = new ObservableCollection<DriveFile>(driveFiles.Files);
             });
         }

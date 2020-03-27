@@ -15,5 +15,12 @@
                 return cfg;
             }
         }
+
+        public struct Options
+        {
+            public static string DSaveFolderId = "dSaveFolderId";
+            public static string DFoldersList = "dFoldersList";
+            public static string DSaveFolderName = "dSaveFolderName";
+        }
     }
 }

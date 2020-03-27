@@ -46,7 +46,7 @@ namespace ChitankaMobileUI.ViewModels
 
         private async void Downloader_OnFileDownloaded(object sender, DownloadEventArgs e)
         {
-            string folderId = GlobalConfig.Instance.Properties["dSaveFolderId"] as string;
+            string folderId = GlobalConfig.Instance.Properties[GlobalConfig.Options.DSaveFolderId] as string;
             bool isFolderUsed = StaticFileDownloader.DownloadPaths.ContainsKey(folderId);
             if (!isFolderUsed)
             {

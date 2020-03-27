@@ -18,8 +18,8 @@ namespace ChitankaMobileUI.Views
         private void FilesList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             DriveFile file = e.SelectedItem as DriveFile;
-            GlobalConfig.Instance.Properties["dSaveFolderId"] = file.Id;
-            GlobalConfig.Instance.Properties["dSaveFolderName"] = file.Name;
+            GlobalConfig.Instance.Properties[GlobalConfig.Options.DSaveFolderId] = file.Id;
+            GlobalConfig.Instance.Properties[GlobalConfig.Options.DSaveFolderName] = file.Name;
             GlobalConfig.Instance.Save();
             Navigation.PopAsync();
         }

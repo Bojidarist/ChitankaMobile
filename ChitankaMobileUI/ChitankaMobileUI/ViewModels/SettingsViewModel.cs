@@ -21,9 +21,9 @@ namespace ChitankaMobileUI.ViewModels
         {
             get
             {
-                if (GlobalConfig.Instance.Properties.ContainsKey("dSaveFolderName"))
+                if (GlobalConfig.Instance.Properties.ContainsKey(GlobalConfig.Options.DSaveFolderName))
                 {
-                    return GlobalConfig.Instance.Properties["dSaveFolderName"] as string;
+                    return GlobalConfig.Instance.Properties[GlobalConfig.Options.DSaveFolderName] as string;
                 }
                 return null;
             }
