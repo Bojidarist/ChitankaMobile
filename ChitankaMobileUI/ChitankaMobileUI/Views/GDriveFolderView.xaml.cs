@@ -13,6 +13,12 @@ namespace ChitankaMobileUI.Views
         {
             InitializeComponent();
             BindingContext = new GDriveFolderViewModel(files);
+            Helpers.NavigationHelper.OnBackButtonPressed += BackButtonPressed;
+        }
+
+        private async void BackButtonPressed()
+        {
+            await Navigation.PopAsync();
         }
 
         private void FilesList_ItemSelected(object sender, SelectedItemChangedEventArgs e)

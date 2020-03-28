@@ -1,12 +1,20 @@
 ﻿using ChitankaMobileUI.Enums;
 using ChitankaMobileUI.Models;
 using ChitankaMobileUI.Views;
+using System;
 using System.Threading.Tasks;
 
 namespace ChitankaMobileUI.Helpers
 {
     public static class NavigationHelper
     {
+        public static event Action OnBackButtonPressed;
+
+        public static void InvokeOnBackButtonPressed()
+        {
+            OnBackButtonPressed?.Invoke();
+        }
+
         public static async Task Navigate(ViewsEnum view, object param = null)
         {
             switch (view)

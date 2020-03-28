@@ -37,7 +37,7 @@ namespace ChitankaMobileUI.Helpers
                         StaticDriveAPI.Instance.InitDriveService();
 
                         isLoggedIn = true;
-                        string msg = "<h1>All done here</h1>";
+                        string msg = "<h1>All done here. You can close the window.</h1>";
                         context.Response.ContentLength64 = Encoding.UTF8.GetByteCount(msg);
                         context.Response.StatusCode = (int)HttpStatusCode.OK;
                         using (Stream stream = context.Response.OutputStream)

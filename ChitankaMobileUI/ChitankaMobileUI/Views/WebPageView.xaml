@@ -15,6 +15,26 @@
                 Navigated="CWebView_Navigated"
                 Source="{Binding MainPage}"
                 VerticalOptions="FillAndExpand" />
+            <Image
+                Margin="8"
+                Aspect="AspectFit"
+                HeightRequest="32"
+                HorizontalOptions="Start"
+                MinimumHeightRequest="32"
+                MinimumWidthRequest="32"
+                Source="home_icon.png"
+                VerticalOptions="Start"
+                WidthRequest="32" />
+            <Button
+                Margin="8"
+                BackgroundColor="Transparent"
+                Clicked="RefreshToHomeClicked"
+                HeightRequest="32"
+                HorizontalOptions="Start"
+                MinimumHeightRequest="32"
+                MinimumWidthRequest="32"
+                VerticalOptions="Start"
+                WidthRequest="32" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>
