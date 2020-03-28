@@ -20,6 +20,15 @@ namespace ChitankaMobileUI
 
         protected override async void OnStart()
         {
+            // Delete files in downloads directory
+            if (Directory.Exists(DirHelper.ChitankaDownloadsPath))
+            {
+                foreach (var file in Directory.GetFiles(DirHelper.ChitankaDownloadsPath))
+                {
+                    File.Delete(file);
+                }
+            }
+
             // Refresh token on startup
             try
             {
