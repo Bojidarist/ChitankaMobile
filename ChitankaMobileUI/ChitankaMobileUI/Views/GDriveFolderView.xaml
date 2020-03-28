@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Command="{Binding RefreshCommand}" Text="Refresh" />
+        <ToolbarItem Command="{Binding RefreshCommand}" IconImageSource="refresh_icon.png" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <Grid>

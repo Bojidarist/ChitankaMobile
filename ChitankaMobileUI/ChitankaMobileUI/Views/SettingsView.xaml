@@ -4,18 +4,41 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:magic="clr-namespace:MagicGradients;assembly=MagicGradients"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Shell.NavBarIsVisible="False"
     mc:Ignorable="d">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Settings" />
-            <Button Command="{Binding GConnectCommand}" Text="{Binding ConnectToGoogleText}" />
-            <Entry
-                IsReadOnly="True"
-                Placeholder="Folder Name"
-                Text="{Binding GDriveFolderName}" />
-            <Button Command="{Binding GFolderSelectCommand}" Text="Choose Folder" />
-        </StackLayout>
+        <Grid>
+            <magic:GradientView VerticalOptions="FillAndExpand">
+                <magic:GradientView.GradientSource>
+                    <magic:LinearGradient Angle="-45">
+                        <magic:GradientStop Offset="0" Color="#88ceb1" />
+                        <magic:GradientStop Offset="1" Color="#3aa295" />
+                    </magic:LinearGradient>
+                </magic:GradientView.GradientSource>
+            </magic:GradientView>
+            <StackLayout>
+                <Button
+                    Margin="8"
+                    BackgroundColor="White"
+                    Command="{Binding GConnectCommand}"
+                    CornerRadius="4"
+                    Text="{Binding ConnectToGoogleText}" />
+                <Entry
+                    Margin="8,16,8,0"
+                    IsReadOnly="True"
+                    Placeholder="Folder Name"
+                    PlaceholderColor="Gray"
+                    Text="{Binding GDriveFolderName}"
+                    TextColor="White" />
+                <Button
+                    Margin="8,0,8,0"
+                    BackgroundColor="White"
+                    Command="{Binding GFolderSelectCommand}"
+                    CornerRadius="4"
+                    Text="Choose Folder" />
+            </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

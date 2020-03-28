@@ -4,80 +4,153 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:magic="clr-namespace:MagicGradients;assembly=MagicGradients"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     NavigationPage.HasNavigationBar="False"
     Shell.NavBarIsVisible="False"
     mc:Ignorable="d">
     <ContentPage.Content>
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="0.7*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="0.25*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <Grid Margin="8">
+            <Image
+                Aspect="AspectFill"
+                Opacity="0.1"
+                Source="{Binding BookCover}" />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.5*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="0.12*" />
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="{OnIdiom auto, Phone=0.9*, Tablet=2*}" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <BoxView
-                    Grid.ColumnSpan="2"
-                    BackgroundColor="Green"
-                    CornerRadius="16" />
-                <Image
-                    Grid.Column="0"
+
+                <Frame
                     Margin="8"
-                    Aspect="AspectFill"
-                    Source="{Binding BookCover}" />
-                <StackLayout Grid.Column="1">
-                    <Label
-                        Margin="8"
-                        FontAttributes="Bold"
-                        FontSize="Default"
-                        HorizontalTextAlignment="Center"
-                        LineBreakMode="TailTruncation"
-                        Text="{Binding Book.Book.Title}"
-                        TextColor="White" />
-                    <StackLayout>
-                        <Label FontSize="Small" Text="Автор:" />
-                        <Label Text="{Binding Book.Book.TitleAuthor}" TextColor="White" />
+                    Padding="0"
+                    BackgroundColor="Transparent"
+                    CornerRadius="8"
+                    IsClippedToBounds="True">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="{OnIdiom auto, Phone=0.6*, Tablet=2*}" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <magic:GradientView Grid.ColumnSpan="2" VerticalOptions="FillAndExpand">
+                            <magic:GradientView.GradientSource>
+                                <magic:LinearGradient Angle="-45">
+                                    <magic:GradientStop Offset="0" Color="#88ceb1" />
+                                    <magic:GradientStop Offset="1" Color="#3aa295" />
+                                </magic:LinearGradient>
+                            </magic:GradientView.GradientSource>
+                        </magic:GradientView>
+                        <Image
+                            Grid.Column="0"
+                            Margin="8"
+                            Aspect="Fill"
+                            Source="{Binding BookCover}" />
+                        <StackLayout Grid.Column="1">
+                            <Label
+                                Margin="8"
+                                FontAttributes="Bold"
+                                FontSize="Default"
+                                HorizontalTextAlignment="Center"
+                                LineBreakMode="TailTruncation"
+                                Text="{Binding Book.Book.Title}"
+                                TextColor="White" />
+                            <StackLayout HorizontalOptions="Start" VerticalOptions="Center">
+                                <StackLayout Orientation="Horizontal" Spacing="0">
+                                    <Label
+                                        FontSize="Small"
+                                        LineBreakMode="NoWrap"
+                                        Text="Автор: "
+                                        TextColor="Black" />
+                                    <Label
+                                        LineBreakMode="TailTruncation"
+                                        Text="{Binding Book.Book.TitleAuthor}"
+                                        TextColor="White" />
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal" Spacing="0">
+                                    <Label
+                                        FontSize="Small"
+                                        LineBreakMode="NoWrap"
+                                        Text="Година: "
+                                        TextColor="Black" />
+                                    <Label
+                                        LineBreakMode="TailTruncation"
+                                        Text="{Binding BookYear}"
+                                        TextColor="White" />
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal" Spacing="0">
+                                    <Label
+                                        FontSize="Small"
+                                        LineBreakMode="NoWrap"
+                                        Text="Език: "
+                                        TextColor="Black" />
+                                    <Label
+                                        LineBreakMode="TailTruncation"
+                                        Text="{Binding Book.Book.Language.Name}"
+                                        TextColor="White" />
+                                </StackLayout>
+                            </StackLayout>
+                        </StackLayout>
+                    </Grid>
+                </Frame>
+                <ScrollView
+                    x:Name="DescriptionScroll"
+                    Grid.Row="1"
+                    Scrolled="DescriptionScroll_Scrolled"
+                    Visual="Material">
+                    <StackLayout Margin="8">
+                        <Label
+                            Margin="16,16"
+                            FontSize="Body"
+                            Text="{Binding Book.Book.Annotation}"
+                            TextColor="Black" />
                     </StackLayout>
-                    <StackLayout>
-                        <Label FontSize="Small" Text="Година:" />
-                        <Label Text="{Binding BookYear}" TextColor="White" />
-                    </StackLayout>
-                    <StackLayout>
-                        <Label FontSize="Small" Text="Език:" />
-                        <Label Text="{Binding Book.Book.Language.Name}" TextColor="White" />
-                    </StackLayout>
-                </StackLayout>
+                </ScrollView>
+                <Frame
+                    Grid.Row="1"
+                    Grid.RowSpan="2"
+                    Padding="0"
+                    BackgroundColor="Transparent"
+                    InputTransparent="True">
+                    <magic:GradientView x:Name="DescriptionGradient" VerticalOptions="FillAndExpand">
+                        <magic:GradientView.GradientSource>
+                            <magic:LinearGradient Angle="0">
+                                <magic:GradientStop Offset="0.4" Color="Transparent" />
+                                <magic:GradientStop Offset="1" Color="#3aa295" />
+                            </magic:LinearGradient>
+                        </magic:GradientView.GradientSource>
+                    </magic:GradientView>
+                </Frame>
+                <Frame
+                    Grid.Row="2"
+                    Margin="0"
+                    Padding="0"
+                    BackgroundColor="Transparent"
+                    CornerRadius="0"
+                    IsClippedToBounds="True">
+                    <Grid>
+                        <magic:GradientView VerticalOptions="FillAndExpand">
+                            <magic:GradientView.GradientSource>
+                                <magic:LinearGradient Angle="-45">
+                                    <magic:GradientStop Offset="0" Color="#88ceb1" />
+                                    <magic:GradientStop Offset="1" Color="#3aa295" />
+                                </magic:LinearGradient>
+                            </magic:GradientView.GradientSource>
+                        </magic:GradientView>
+                        <Button
+                            BackgroundColor="Transparent"
+                            Command="{Binding DownloadBookCommand}"
+                            IsEnabled="{Binding IsDownloadable}"
+                            Opacity="1"
+                            Text="Изтегли"
+                            TextColor="White"
+                            Visual="Material" />
+                    </Grid>
+                </Frame>
             </Grid>
-            <ScrollView Grid.Row="1" Visual="Material">
-                <StackLayout Margin="8">
-                    <Label FontSize="Large" Text="Описание" />
-                    <Label
-                        Margin="16,16"
-                        FontSize="Body"
-                        Text="{Binding Book.Book.Annotation}" />
-                </StackLayout>
-            </ScrollView>
-            <Button
-                Grid.Row="2"
-                Margin="8"
-                BackgroundColor="DarkSeaGreen"
-                BorderColor="Brown"
-                BorderWidth="0.25"
-                Command="{Binding DownloadBookCommand}"
-                CornerRadius="4"
-                IsEnabled="{Binding IsDownloadable}"
-                Opacity="0.85"
-                Text="Изтегли"
-                TextColor="White"
-                Visual="Material" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

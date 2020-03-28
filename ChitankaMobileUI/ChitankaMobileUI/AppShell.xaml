@@ -14,7 +14,7 @@
     -->
     <Shell.Resources>
         <ResourceDictionary>
-            <Color x:Key="NavigationPrimary">#2196F3</Color>
+            <Color x:Key="NavigationPrimary">#3aa295</Color>
             <Style x:Key="BaseStyle" TargetType="Element">
                 <Setter Property="Shell.BackgroundColor" Value="{StaticResource NavigationPrimary}" />
                 <Setter Property="Shell.ForegroundColor" Value="White" />
@@ -31,7 +31,7 @@
     </Shell.Resources>
 
     <!--  Your Pages  -->
-    <TabBar>
+    <TabBar Style="{StaticResource BaseStyle}">
         <Tab Title="Web" Icon="explore_icon.png">
             <ShellContent ContentTemplate="{DataTemplate views:WebPageView}" />
         </Tab>
