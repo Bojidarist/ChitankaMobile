@@ -14,7 +14,30 @@ namespace ChitankaMobileUI.ViewModels
         private bool isDownloadable = true;
 
         public ChitankaBookModel Book { get; set; }
-        public string BookCover { get { return "https://assets.chitanka.info/" + Book.Book.Cover; } }
+        public string BookCover
+        {
+            get
+            {
+                string val = "";
+                if (Book.Book.HasCover.HasValue)
+                {
+                    if (Book.Book.HasCover.Value)
+                    {
+                        val = "https://assets.chitanka.info/" + Book.Book.Cover;
+                    }
+                    else
+                    {
+                        val = "https://assets.chitanka.info/thumb/?book-cover/00/0.2500.png";
+                    }
+                }
+                else
+                {
+                    val = "https://assets.chitanka.info/thumb/?book-cover/00/0.2500.png";
+                }
+
+                return val;
+            }
+        }
         public string BookYear { get { return Book.Book.Year.HasValue ? Book.Book.Year.Value.ToString() : ""; } }
         public bool IsDownloadable
         {
